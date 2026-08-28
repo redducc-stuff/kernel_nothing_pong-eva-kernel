@@ -31,15 +31,15 @@ register_eva_module(
     ],
     config_deps = {
         "TARGET_SYNX_ENABLE": [
-            "//vendor/qcom/sm8450-modules/qcom/opensource/synx-kernel:synx_headers",
-            "//vendor/qcom/sm8450-modules/qcom/opensource/synx-kernel:%b_modules",
+            "//vendor/osom/ingot-modules/qcom/opensource/synx-kernel:synx_headers",
+            "//vendor/osom/ingot-modules/qcom/opensource/synx-kernel:%b_modules",
         ],
         "TARGET_MMRM_ENABLE": [
-            "//vendor/qcom/sm8450-modules/qcom/opensource/mmrm-driver:%b_mmrm_driver",
+            "//vendor/osom/ingot-modules/qcom/opensource/mmrm-driver:%b_mmrm_driver",
         ],
         "TARGET_DSP_ENABLE": [
-            "//vendor/qcom/sm8450-modules/qcom/opensource/dsp-kernel:fastrpc_headers",
-            "//vendor/qcom/sm8450-modules/qcom/opensource/dsp-kernel:%b_frpc-adsprpc",
+            "//vendor/osom/ingot-modules/qcom/opensource/dsp-kernel:fastrpc_headers",
+            "//vendor/osom/ingot-modules/qcom/opensource/dsp-kernel:%b_frpc-adsprpc",
         ],
     },
 )
