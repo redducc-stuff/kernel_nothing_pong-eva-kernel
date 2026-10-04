@@ -95,6 +95,8 @@ def define_target_variant_modules(target, variant, registry, modules, config_opt
             "//soc-repo:all_headers",
             "//soc-repo:{}/drivers/firmware/qcom/qcom-scm".format(kernel_build),
             "//soc-repo:{}/drivers/clk/qcom/clk-qcom".format(kernel_build),
+            "//soc-repo:{}/drivers/soc/qcom/mdt_loader".format(kernel_build),
+            "//soc-repo:{}/drivers/soc/qcom/llcc-qcom".format(kernel_build),
         ],
         "//build/kernel/kleaf:socrepo_false": ["//msm-kernel:all_headers"],
     }) + registry.hdrs
