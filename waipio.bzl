@@ -14,5 +14,7 @@ def define_waipio():
             "CONFIG_MSM_MMRM",
             "TARGET_MMRM_ENABLE",
             "TARGET_DSP_ENABLE",
+            "CONFIG_QCOM_MDT_LOADER",
+            "CONFIG_QCOM_LLCC",
         ],
     )
