@@ -221,9 +221,21 @@ int msm_cvp_map_smem(struct msm_cvp_inst *inst,
 	rc = mem_buf_dma_buf_copy_vmperm(dma_buf,
 			&vmid_list, &perms_list, &nelems);
 	if (rc) {
-		dprintk(CVP_ERR, "%s fail to get vmid and perms %d\n",
-			__func__, rc);
-		return rc;
+		/* Buffers without mem-buf vmperm: derive the domain from their heap */
+		const char *exp = dma_buf->exp_name ? dma_buf->exp_name : "";
+
+		vmid_list = NULL;
+		perms_list = NULL;
+		nelems = 0;
+		rc = 0;
+		if (strstr(exp, "secure-non-pixel"))
+			smem->flags |= (SMEM_SECURE | SMEM_NON_PIXEL);
+		else if (strstr(exp, "secure-pixel"))
+			smem->flags |= (SMEM_SECURE | SMEM_PIXEL);
+		else if (strstr(exp, "secure-camera") || strstr(exp, "secure-cam"))
+			smem->flags |= (SMEM_SECURE | SMEM_CAMERA);
+		dprintk(CVP_MEM, "%s: no vmperm, heap %s flags %#x\n",
+			__func__, exp, smem->flags);
 	}
 
 	for (temp = 0; temp < nelems; temp++) {
