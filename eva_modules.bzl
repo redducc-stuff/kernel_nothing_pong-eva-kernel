@@ -4,7 +4,7 @@ EVA_KERNEL_ROOT = "eva-kernel"
 
 eva_modules = create_module_registry([
     ":eva_drivers_headers",
-    "//vendor/qcom/opensource/synx-kernel:synx_headers",
+    "//vendor/qcom/opensource/synx-kernel:synx_v1_headers",
 ])
 register_eva_module = eva_modules.register
 
@@ -34,7 +34,6 @@ register_eva_module(
     ],
     config_deps = {
         "TARGET_SYNX_ENABLE": [
-            "//vendor/qcom/opensource/synx-kernel:synx_headers",
             "//vendor/qcom/opensource/synx-kernel:%b_synx-driver_synx",
         ],
         "TARGET_MMRM_ENABLE": [
