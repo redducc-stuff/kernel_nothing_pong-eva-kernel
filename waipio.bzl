@@ -15,6 +15,5 @@ def define_waipio():
             "CONFIG_MSM_GLOBAL_SYNX",
             "TARGET_SYNX_ENABLE",
             "TARGET_MMRM_ENABLE",
-            "TARGET_DSP_ENABLE",
         ],
     )

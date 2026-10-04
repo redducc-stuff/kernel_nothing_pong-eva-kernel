@@ -31,11 +31,11 @@ register_eva_module(
     ],
     config_deps = {
         "TARGET_SYNX_ENABLE": [
-            "//vendor/osom/ingot-modules/qcom/opensource/synx-kernel:synx_headers",
-            "//vendor/osom/ingot-modules/qcom/opensource/synx-kernel:%b_modules",
+            "//vendor/qcom/opensource/synx-kernel:synx_headers",
+            "//vendor/qcom/opensource/synx-kernel:%b_synx-driver_synx",
         ],
         "TARGET_MMRM_ENABLE": [
-            "//vendor/osom/ingot-modules/qcom/opensource/mmrm-driver:%b_mmrm_driver",
+            "//vendor/qcom/opensource/mmrm-driver:%b_mmrm_driver",
         ],
         "TARGET_DSP_ENABLE": [
             "//vendor/osom/ingot-modules/qcom/opensource/dsp-kernel:fastrpc_headers",
