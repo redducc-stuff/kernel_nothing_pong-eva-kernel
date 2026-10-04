@@ -306,7 +306,16 @@ static int alloc_dma_mem(size_t size, u32 align, int map_kernel,
 	size = ALIGN(size, SZ_4K);
 
 	if (is_iommu_present(res)) {
-		heap = dma_heap_find("qcom,system");
+		/*
+		 * Without mem-buf VM lending on waipio, take secure buffers
+		 * straight from the heaps that hyp-assign them to the CP VMs.
+		 */
+		if (mem->flags & SMEM_NON_PIXEL)
+			heap = dma_heap_find("qcom,secure-non-pixel");
+		else if (mem->flags & SMEM_PIXEL)
+			heap = dma_heap_find("qcom,secure-pixel");
+		else
+			heap = dma_heap_find("qcom,system");
 		dprintk(CVP_MEM, "%s size %zx align %d flag %d\n",
 		__func__, size, align, mem->flags);
 	} else {
@@ -329,13 +338,8 @@ static int alloc_dma_mem(size_t size, u32 align, int map_kernel,
 	arg.vmids = vmids;
 	arg.perms = perms;
 
-	if (mem->flags & SMEM_NON_PIXEL) {
-		vmids[0] = VMID_CP_NON_PIXEL;
-		rc = mem_buf_lend(dbuf, &arg);
-	} else if (mem->flags & SMEM_PIXEL) {
-		vmids[0] = VMID_CP_PIXEL;
-		rc = mem_buf_lend(dbuf, &arg);
-	}
+	/* Secure buffers come pre-assigned from their heap; nothing to lend */
+	vmids[0] = 0;
 
 	if (rc) {
 		dprintk(CVP_ERR, "Failed to lend dmabuf %d, vmid %d\n",
