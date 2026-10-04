@@ -3458,8 +3458,11 @@ static int __init_resources(struct iris_hfi_device *device,
 	}
 
 	rc = __init_subcaches(device);
-	if (rc)
+	if (rc) {
+		/* LLCC slices only speed EVA up; run without them */
 		dprintk(CVP_WARN, "Failed to init subcaches: %d\n", rc);
+		rc = 0;
+	}
 
 	device->sys_init_capabilities =
 		kzalloc(sizeof(struct msm_cvp_capability)
