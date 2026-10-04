@@ -578,7 +578,7 @@ static int msm_cvp_load_regulator_table(
 					"Failed to alloc memory for regulator name\n");
 			goto err_reg_name_alloc;
 		}
-		strlcpy(rinfo->name, domains_property->name,
+		strscpy(rinfo->name, domains_property->name,
 			(supply - domains_property->name) + 1);
 
 		rinfo->has_hw_power_collapse = of_property_read_bool(
@@ -949,7 +949,7 @@ static int msm_cvp_setup_context_bank(struct msm_cvp_platform_resources *res,
 		dev->dma_parms =
 			devm_kzalloc(dev, sizeof(*dev->dma_parms), GFP_KERNEL);
 	dma_set_max_seg_size(dev, DMA_BIT_MASK(32));
-	dma_set_seg_boundary(dev, DMA_BIT_MASK(64));
+	dma_set_seg_boundary(dev, (unsigned long)DMA_BIT_MASK(64));
 
 	dprintk(CVP_CORE, "Attached %s and created mapping\n", dev_name(dev));
 	dprintk(CVP_CORE,

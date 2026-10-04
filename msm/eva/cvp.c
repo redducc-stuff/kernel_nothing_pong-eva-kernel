@@ -523,20 +523,19 @@ static int msm_cvp_probe(struct platform_device *pdev)
 	return -EINVAL;
 }
 
-static int msm_cvp_remove(struct platform_device *pdev)
+static void msm_cvp_remove(struct platform_device *pdev)
 {
-	int rc = 0;
 	struct msm_cvp_core *core;
 
 	if (!pdev) {
 		dprintk(CVP_ERR, "%s invalid input %pK", __func__, pdev);
-		return -EINVAL;
+		return;
 	}
 
 	core = dev_get_drvdata(&pdev->dev);
 	if (!core) {
 		dprintk(CVP_ERR, "%s invalid core", __func__);
-		return -EINVAL;
+		return;
 	}
 
 	cvp_hfi_deinitialize(core->hfi_type, core->device);
@@ -546,7 +545,7 @@ static int msm_cvp_remove(struct platform_device *pdev)
 	mutex_destroy(&core->lock);
 	mutex_destroy(&core->clk_lock);
 	kfree(core);
-	return rc;
+	return;
 }
 
 static int msm_cvp_pm_suspend(struct device *dev)

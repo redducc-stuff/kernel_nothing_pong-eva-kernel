@@ -2,7 +2,10 @@ load(":eva_module_build.bzl", "create_module_registry")
 
 EVA_KERNEL_ROOT = "eva-kernel"
 
-eva_modules = create_module_registry([":eva_drivers_headers"])
+eva_modules = create_module_registry([
+    ":eva_drivers_headers",
+    "//vendor/qcom/opensource/synx-kernel:synx_headers",
+])
 register_eva_module = eva_modules.register
 
 register_eva_module(
@@ -38,8 +41,7 @@ register_eva_module(
             "//vendor/qcom/opensource/mmrm-driver:%b_mmrm_driver",
         ],
         "TARGET_DSP_ENABLE": [
-            "//vendor/osom/ingot-modules/qcom/opensource/dsp-kernel:fastrpc_headers",
-            "//vendor/osom/ingot-modules/qcom/opensource/dsp-kernel:%b_frpc-adsprpc",
+            "//vendor/qcom/opensource/dsp-kernel:%b_frpc-adsprpc",
         ],
     },
 )

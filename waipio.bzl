@@ -12,8 +12,7 @@ def define_waipio():
         config_options = [
             "CONFIG_EVA_WAIPIO",
             "CONFIG_MSM_MMRM",
-            "CONFIG_MSM_GLOBAL_SYNX",
-            "TARGET_SYNX_ENABLE",
             "TARGET_MMRM_ENABLE",
+            "TARGET_DSP_ENABLE",
         ],
     )

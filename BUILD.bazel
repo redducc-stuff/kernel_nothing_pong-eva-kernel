@@ -20,6 +20,11 @@ ddk_headers(
     includes = ["include/uapi/eva"]
 )
 ddk_headers(
+    name = "fastrpc_headers",
+    hdrs = ["include/linux/fastrpc.h"],
+    includes = ["include"]
+)
+ddk_headers(
     name = "msm_headers",
     hdrs = glob([
       "msm/eva/*.h",
@@ -29,7 +34,7 @@ ddk_headers(
 
 ddk_headers(
     name = "eva_drivers_headers",
-    hdrs = [":eva_drivers_configs", ":uapi_headers", ":msm_headers"]
+    hdrs = [":eva_drivers_configs", ":uapi_headers", ":fastrpc_headers", ":msm_headers"]
 )
 
 

@@ -91,7 +91,11 @@ def define_target_variant_modules(target, variant, registry, modules, config_opt
     formatter = lambda s: s.replace("%b", kernel_build).replace("%t", target)
 
     headers = select({
-        "//build/kernel/kleaf:socrepo_true": ["//soc-repo:all_headers"],
+        "//build/kernel/kleaf:socrepo_true": [
+            "//soc-repo:all_headers",
+            "//soc-repo:{}/drivers/firmware/qcom/qcom-scm".format(kernel_build),
+            "//soc-repo:{}/drivers/clk/qcom/clk-qcom".format(kernel_build),
+        ],
         "//build/kernel/kleaf:socrepo_false": ["//msm-kernel:all_headers"],
     }) + registry.hdrs
     all_module_rules = []

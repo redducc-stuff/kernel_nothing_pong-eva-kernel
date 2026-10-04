@@ -193,30 +193,19 @@ static bool __is_buf_valid(struct msm_cvp_inst *inst,
 static struct file *msm_cvp_fget(unsigned int fd, struct task_struct *task,
 			fmode_t mask, unsigned int refs)
 {
-	struct files_struct *files = task->files;
 	struct file *file;
 
-	if (!files)
+	/* fget_task() isn't exported on 6.12; buffers are mapped from the client's own context */
+	if (task != current) {
+		dprintk(CVP_ERR, "%s: fd %u lookup outside the client task\n", __func__, fd);
 		return NULL;
-
-	rcu_read_lock();
-loop:
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 13, 0))
-	file = fcheck_files(files, fd);
-#else
-	file = files_lookup_fd_rcu(files, fd);
-#endif
-	if (file) {
-		/* File object ref couldn't be taken.
-		 * dup2() atomicity guarantee is the reason
-		 * we loop to catch the new file (or NULL pointer)
-		 */
-		if (file->f_mode & mask)
-			file = NULL;
-		else if (!get_file_rcu(file))
-			goto loop;
 	}
-	rcu_read_unlock();
+
+	file = fget(fd);
+	if (file && (file->f_mode & mask)) {
+		fput(file);
+		file = NULL;
+	}
 
 	return file;
 }

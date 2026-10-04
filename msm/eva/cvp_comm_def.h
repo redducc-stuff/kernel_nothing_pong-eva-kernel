@@ -24,7 +24,10 @@ enum queue_state {
 };
 
 #ifdef CONFIG_EVA_WAIPIO
+/* EVA speaks the synx v1 API; only enable it with a matching synx */
+#ifdef TARGET_SYNX_ENABLE
 #define CVP_SYNX_ENABLED 1
+#endif
 #define CVP_MMRM_ENABLED 1
 #define CVP_FASTRPC_ENABLED 1
 #define CVP_MINIDUMP_ENABLED 1
